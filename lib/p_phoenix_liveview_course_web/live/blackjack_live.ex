@@ -5,8 +5,8 @@ defmodule PPhoenixLiveviewCourseWeb.BlackjackLive do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, socket |> init_deck() |> first_deal(),
-     layout: {PPhoenixLiveviewCourseWeb.Layouts, :root}}
+    {:ok, socket |> assign(game_title: "Blackjack ♥️♣️♠️♦️") |> init_deck() |> first_deal(),
+     layout: {PPhoenixLiveviewCourseWeb.Layouts, :game}}
   end
 
   defp init_deck(socket) do
