@@ -83,7 +83,9 @@ defmodule PPhoenixLiveviewCourseWeb.GameLive.FormComponent do
     save_game(socket, socket.assigns.action, game_params)
   end
 
-  defp save_game(socket, :edit, game_params) do
+  defp save_game(socket, :edit, params) do
+    game_params = params_with_image(socket, params)
+
     case Catalog.update_game(socket.assigns.game, game_params) do
       {:ok, game} ->
         notify_parent({:saved, game})
@@ -98,7 +100,9 @@ defmodule PPhoenixLiveviewCourseWeb.GameLive.FormComponent do
     end
   end
 
-  defp save_game(socket, :new, game_params) do
+  defp save_game(socket, :new, params) do
+    game_params = params_with_image(socket, params)
+
     case Catalog.create_game(game_params) do
       {:ok, game} ->
         notify_parent({:saved, game})
@@ -114,4 +118,21 @@ defmodule PPhoenixLiveviewCourseWeb.GameLive.FormComponent do
   end
 
   defp notify_parent(msg), do: send(self(), {__MODULE__, msg})
+
+  def params_with_image(socket, params) do
+    path =
+      socket
+      |> consume_uploaded_entries(:image, &upload_static_file/2)
+      |> List.first()
+
+    Map.put(params, "image_upload", path)
+  end
+
+  defp upload_static_file(%{path: path}, _entry) do
+    # Plug in your production image file persistence implementation here!
+    filename = Path.basename(path)
+    dest = Path.join("priv/static/images", filename)
+    File.cp!(path, dest)
+    {:ok, ~p"/images/#{filename}"}
+  end
 end
