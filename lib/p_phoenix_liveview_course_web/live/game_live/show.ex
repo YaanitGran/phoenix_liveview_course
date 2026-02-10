@@ -20,6 +20,22 @@ defmodule PPhoenixLiveviewCourseWeb.GameLive.Show do
      |> assign_tomatoes_rating(id)}
   end
 
+  @impl true
+  def handle_event("on_tomatoe", %{"count" => count, "type" => type}, socket) do
+    new_count = String.to_integer(count) + 1
+    type = String.to_atom(type)
+    current_tomatoes = socket.assigns.tomatoes
+
+    case Rating.update_tomatoes(current_tomatoes, Map.put(%{}, type, new_count)) do
+      {:ok, updated_tomatoes} ->
+        {:noreply, socket |> assign(:tomatoes, updated_tomatoes)}
+
+      error ->
+        IO.inspect(error)
+        {:noreply, socket |> put_flash(:error, "Cannot update tomatoes info")}
+    end
+  end
+
   defp assign_tomatoes_rating(socket, game_id) do
     case Rating.get_tomatoes_by_game(game_id) do
       %Tomatoes{} = tomatoes ->

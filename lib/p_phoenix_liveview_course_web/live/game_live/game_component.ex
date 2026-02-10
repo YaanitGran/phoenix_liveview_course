@@ -32,9 +32,9 @@ defmodule PPhoenixLiveviewCourseWeb.GameLive.GameComponent do
       |> Map.put(:bad_percentage, Float.round(assigns.bad / total * 100, 1))
 
     ~H"""
-    <div class="flex justify-center items-center gap-4">
-      <span class="text-green-700 text-xl">{assigns.good_percentage}%</span>
-      <span class="text-red-600 text-xl">{assigns.bad_percentage}%</span>
+    <div class="flex justify-center items-center gap-2">
+      <span class="text-green-700 text-lg">{assigns.good_percentage}%</span>
+      <span class="text-red-600 text-lg">{assigns.bad_percentage}%</span>
     </div>
     """
   end
