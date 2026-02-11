@@ -1,3 +1,27 @@
+/*GYM*/
+.gym {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.gym > h1 {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.gym > h2 {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.gym .pokemon-battle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+}
+
 /* POKEMON CARDS */
 .pokemon-card {
     border: 1px solid #ccc;
@@ -8,6 +32,7 @@
     align-items: center;
     border-radius: 4px;
     transition: all 0.3s ease;
+    box-sizing: border-box;
 }
 
 .pokemon-card > img {
