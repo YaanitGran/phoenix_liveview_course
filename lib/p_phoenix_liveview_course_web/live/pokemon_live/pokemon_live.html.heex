@@ -20,6 +20,7 @@
 
   <button
     :if={@p1_pokemon && @p2_pokemon}
+    id="battle-button"
     class="battle-button"
     phx-click={
       JS.toggle_class("winner-animation", to: winner_id(@winner))
