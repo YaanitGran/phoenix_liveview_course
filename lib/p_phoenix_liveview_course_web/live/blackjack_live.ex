@@ -23,6 +23,11 @@ defmodule PPhoenixLiveviewCourseWeb.BlackjackLive do
     {:noreply, socket |> cpu_draw_card(1) |> handle_winner_on_stand()}
   end
 
+    @impl true
+  def handle_event("reset", _params, socket) do
+    {:noreply, socket |> init_deck() |> first_deal()}
+  end
+
   # Privates
   defp init_deck(socket) do
     socket |> assign(cards: @cards, player: [], cpu: [], winner: nil)
@@ -38,7 +43,7 @@ defmodule PPhoenixLiveviewCourseWeb.BlackjackLive do
   end
 
   defp draw_card(socket, count) do
-    if points(socket.assigns.player) < 21 do
+    if points(socket.assigns.player) < socket.assigns.winning_score do
       [card1] = Enum.take_random(@cards, count)
       new_player_cards = [card1 | socket.assigns.player]
 
@@ -62,11 +67,12 @@ defmodule PPhoenixLiveviewCourseWeb.BlackjackLive do
   defp handle_winner_on_draw(socket) do
     player_points = points(socket.assigns.player)
     cpu_points = points(socket.assigns.cpu)
+    limit = socket.assigns.winning_score
 
     winner =
       cond do
-        player_points > 21 -> :cpu
-        cpu_points > 21 -> :player
+        player_points > limit -> :cpu
+        cpu_points > limit -> :player
         true -> nil
       end
 
@@ -76,11 +82,12 @@ defmodule PPhoenixLiveviewCourseWeb.BlackjackLive do
   defp handle_winner_on_stand(socket) do
     player_points = points(socket.assigns.player)
     cpu_points = points(socket.assigns.cpu)
+    limit = socket.assigns.winning_score
 
     winner =
       cond do
-        player_points > 21 -> :cpu
-        cpu_points > 21 -> :player
+        player_points > limit -> :cpu
+        cpu_points > limit -> :player
         player_points > cpu_points -> :player
         player_points < cpu_points -> :cpu
         true -> :tie
@@ -88,4 +95,17 @@ defmodule PPhoenixLiveviewCourseWeb.BlackjackLive do
 
     socket |> assign(winner: winner)
   end
+  
+  @impl true
+  def handle_params(params, _url, socket) do
+    # Get "score" from URL params, default to 21 if not present or invalid
+    winning_score =
+      params
+      |> Map.get("score", "21")
+      |> String.to_integer()
+
+    {:noreply, assign(socket, winning_score: winning_score)}
+  end
+
+
 end

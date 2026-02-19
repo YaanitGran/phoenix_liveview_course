@@ -1,4 +1,7 @@
 <section>
+  <h2 class="text-3xl font-bold">
+  (Target: {@winning_score})
+</h2>
   <h3 class="text-xl">Deck</h3>
   <div class="flex flex-row justify-center gap-2 my-2">
     <%= for card <- @cards do %>
@@ -53,6 +56,14 @@
       phx-click="stand"
     >
       Stand
+    </button>
+      <%!-- Added Reset Button --%>
+    <button
+      class="shadow-lg bg-emerald-600 text-white text-lg rounded-md px-4 py-2 inline-flex items-center justify-center"
+      type="button"
+      phx-click="reset"
+    >
+      Reset Game
     </button>
   </footer>
 </section>
