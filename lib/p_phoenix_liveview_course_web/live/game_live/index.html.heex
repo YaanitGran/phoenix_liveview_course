@@ -7,11 +7,28 @@
   </:actions>
 </.header>
 
+<%!-- 1. Search Bar Implementation --%>
+<div class="mt-4 mb-2">
+  <%!-- b. Init form with plain map/params and phx-change for real-time --%>
+  <form phx-change="search">
+    <input 
+      type="text" 
+      name="query" 
+      value={@search_term} 
+      placeholder="Search games by name..." 
+      phx-debounce="300"
+      class="block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-500 focus:ring-zinc-500 sm:text-sm"
+    />
+  </form>
+</div>
+
+<%!-- The table component already handles @streams.games --%>
 <.table
   id="games"
   rows={@streams.games}
   row_click={fn {_id, game} -> JS.navigate(~p"/games/#{game}") end}
 >
+  <%!-- Note: Replaced game.title with game.name based on your code --%>
   <:col :let={{_id, game}} label="Name">{game.name}</:col>
   <:col :let={{_id, game}} label="Description">{game.description}</:col>
 

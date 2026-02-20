@@ -7,7 +7,10 @@ defmodule PPhoenixLiveviewCourseWeb.GameLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, stream(socket, :games, Catalog.list_games())}
+    {:ok,
+      socket
+      |> assign(:search_term, "")
+      |> stream(:games, Catalog.list_games())}
   end
 
   @impl true
@@ -48,5 +51,23 @@ defmodule PPhoenixLiveviewCourseWeb.GameLive.Index do
     game = Catalog.get_game!(id)
     {:ok, _} = Catalog.delete_game(game)
     {:noreply, stream_delete(socket, :games, game)}
+  end
+
+  @impl true
+  def handle_event("search", %{"query" => query}, socket) do
+    # a. Requirement: Check for at least 3 characters
+    games =
+      if String.length(query) >= 3 do
+        # Fetch filtered games from your context (Catalog)
+        # You might need to create list_games/1 in your Catalog module
+        Catalog.list_games(query)
+      else
+        Catalog.list_games()
+      end
+
+    {:noreply,
+      socket
+      |> assign(:search_term, query)
+      |> stream(:games, games, reset: true)} # reset: true clears the previous list
   end
 end

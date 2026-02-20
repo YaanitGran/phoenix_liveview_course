@@ -21,6 +21,13 @@ defmodule PPhoenixLiveviewCourse.Catalog do
     Repo.all(Game)
   end
 
+  def list_games(query) do
+  Repo.all(
+    from g in Game,
+    where: ilike(g.name, ^"%#{query}%")
+  )
+  end
+
   @doc """
   Gets a single game.
 
