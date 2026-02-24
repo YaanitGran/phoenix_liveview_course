@@ -10,6 +10,7 @@ defmodule PPhoenixLiveviewCourse.Catalog.Game do
     field :sku, :integer
     field(:image_upload, :string)
     has_one :tomatoes, Tomatoes, on_delete: :delete_all
+    field :views, :integer, default: 0 
 
     timestamps(type: :utc_datetime)
   end

@@ -7,6 +7,7 @@ defmodule PPhoenixLiveviewCourseWeb.GameLive.GameComponent do
 
   attr :on_tomatoe, :any, default: "on_tomatoe"
 
+
   def tomatoe_button(assigns) do
     assigns =
       if is_tuple(assigns.on_tomatoe) do
@@ -60,4 +61,22 @@ defmodule PPhoenixLiveviewCourseWeb.GameLive.GameComponent do
   defp calculate_percentage(total, count) do
     if total > 0, do: Float.round(count / total * 100, 1), else: 0
   end
+
+  @doc """
+  Renders a view counter badge.
+  """
+  def view_counter(assigns) do
+    ~H"""
+    <div class="view-counter-badge">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye">
+        <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0z"/>
+        <circle cx="12" cy="12" r="3"/>
+      </svg>
+      <span class="view-count-text" style="font-weight: bold;">
+        {@count} views
+      </span>
+    </div>
+    """
+  end
+
 end

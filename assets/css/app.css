@@ -5,3 +5,27 @@
 @import "pokemon.css";
 
 /* This file is for your main application CSS */
+
+/* Custom style for the view counter */
+.view-counter-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0.75rem;
+    background-color: #1a1a1a; /* Dark gray, almost black */
+    color: #e0e0e0; /* Off-white */
+    border: 1px solid #6b21a8; /* Deep purple border */
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-family: 'Courier New', Courier, monospace; /* Gothic/Retro vibe */
+    transition: all 0.3s ease;
+}
+
+.view-counter-badge:hover {
+    box-shadow: 0 0 8px #9333ea; /* Purple neon glow on hover */
+    transform: scale(1.05);
+}
+
+.view-counter-badge svg {
+    color: #9333ea; /* Bright purple icon */
+}

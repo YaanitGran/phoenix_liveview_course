@@ -108,4 +108,17 @@ defmodule PPhoenixLiveviewCourse.Catalog do
   def change_game(%Game{} = game, attrs \\ %{}) do
     Game.changeset(game, attrs)
   end
+
+  @doc """
+  Increments the views field for a specific game.
+  This function updates the database directly for better performance.
+  """
+  def increment_game_views(%Game{} = game) do
+    # Increments the :views column by 1
+    from(g in Game, where: g.id == ^game.id)
+    |> Repo.update_all(inc: [views: 1])
+
+    # Returns the updated game structure
+    {:ok, get_game!(game.id)}
+  end
 end

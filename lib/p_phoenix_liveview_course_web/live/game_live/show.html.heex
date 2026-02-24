@@ -16,6 +16,10 @@
   <:item title="Image">
     <img src={@game.image_upload} alt="Game Image" width="300" />
   </:item>
+  <%!-- New row for the view counter using your Function Component --%>
+  <:item title="Views">
+    <PPhoenixLiveviewCourseWeb.GameLive.GameComponent.view_counter count={@game.views} />
+  </:item>
   <:item title="Tomatoes Rating">
     <.live_component module={Tomatometer} id={"tomatometer-#{@game.id}"} game={@game} />
   </:item>

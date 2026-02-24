@@ -36,6 +36,10 @@
     <.live_component module={Tomatometer} id={"tomatometer-#{game.id}"} game={game} />
   </:col>
 
+  <:col :let={{_id, game}} label="Views">
+  <PPhoenixLiveviewCourseWeb.GameLive.GameComponent.view_counter count={game.views} />
+  </:col>
+
   <:action :let={{_id, game}}>
     <div class="sr-only">
       <.link navigate={~p"/games/#{game}"}>Show</.link>
