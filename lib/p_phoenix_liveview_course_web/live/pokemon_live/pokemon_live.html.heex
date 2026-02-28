@@ -7,7 +7,6 @@
   </div>
 
   <h2>Battle area</h2>
-
   <div
     class="pokemon-battle"
     id="battle-area"
@@ -29,7 +28,17 @@
     />
   </div>
 
+  <div id="battle-countdown" 
+     style="display: none; position: absolute; top: 100%; left: 50%; transform: translate(-50%, -50%); font-size: 80px; font-weight: bold; color: yellow; text-shadow: 4px 4px 0px rgba(0,0,0,1); z-index: 100;">
+  </div>
   <button :if={@battle_result != nil} class="battle-button" id="battle-button">
     Battle
+  </button>
+  <button 
+    :if={@battle_result != nil} 
+    phx-click="request-reset" 
+    class="reset-button"
+    >
+      Reset Game
   </button>
 </section>

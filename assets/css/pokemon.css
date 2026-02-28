@@ -86,6 +86,27 @@
     background-color: #0056b3;
 }
 
+.reset-button {
+    display: block;
+    margin: 20px auto 0;
+    background-color: #1f2937; /* Dark gray */
+    color: #d1d5db; /* Light gray text */
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1px solid #4b5563;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.875rem;
+}
+
+.reset-button:hover {
+    background-color: #000000; /* Pure black on hover */
+    color: #ffffff;
+    border-color: #9ca3af;
+    transform: scale(1.05);
+}
+
 /*ANIMATIONS*/
 .winner-animation {
     animation: winner-glow 2s ease-in-out infinite;

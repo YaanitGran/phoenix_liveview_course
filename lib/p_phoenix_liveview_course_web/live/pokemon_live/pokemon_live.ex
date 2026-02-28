@@ -40,6 +40,13 @@ defmodule PPhoenixLiveviewCourseWeb.PokemonLive do
   end
 
   @impl true
+  def handle_event("request-reset", _params, socket) do
+    # We send a message to the PubSub topic so EVERYONE gets notified
+    Phoenix.PubSub.broadcast(PPhoenixLiveviewCourse.PubSub, @battle_topic, %{event: "reset_game"})
+    {:noreply, socket}
+  end
+
+  @impl true
   def handle_info({:pokemon_chosen, sender_id, pokemon}, socket) do
     socket = socket |> assign_player(sender_id, pokemon)
 
@@ -52,6 +59,17 @@ defmodule PPhoenixLiveviewCourseWeb.PokemonLive do
     else
       {:noreply, socket}
     end
+  end
+
+  # This triggers for EVERYONE subscribed to the topic (including you)
+  @impl true
+  def handle_info(%{event: "reset_game"}, socket) do
+    # 1. Reset the state using your existing init_pokemons function
+    # 2. Push an event to JS to clear any visual timers/animations
+    {:noreply,
+    socket
+    |> init_pokemons()
+    |> push_event("reset-client-side", %{})}
   end
 
   #  PRIVATES
